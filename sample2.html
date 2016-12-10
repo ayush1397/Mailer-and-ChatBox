@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<head>  
+
+  <meta charset="UTF-8">
+  
+  <title>your::profile</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="http://turningideas.in/assets/cdn/jquery.emojipicker.tw.css"> 
+
+<link rel="stylesheet" type="text/css" href="http://turningideas.in/assets/cdn/jquery.emojipicker.css">
+
+<script src="http://turningideas.in/assets/cdn/jquery.emojipicker.js"></script>
+
+<script src="http://turningideas.in/assets/cdn/jquery.emojis.js"></script>
+
+  <style>
+    body {
+     
+      background: url("background.png");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      font-family: helvetica;
+    }
+    p {
+      font-size: 22px;
+    }
+
+    .intro{
+      text-align: center;
+      /*width: 200px;
+      display : block;
+      margin: 0px auto;*/
+    }
+
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+    }
+    input[type="submit"] {
+      background: red;
+      color: white;
+    }
+
+    .box{
+      height:200px;
+      background:white;
+      margin:15px;
+      width:100px;
+
+    }
+
+    #chatlog{
+      height: 450px;
+      width:100%;
+      border: 5px solid red;
+      overflow:auto;
+    }
+
+    .comment-log{
+      height: 100px;
+      width:100%;
+      border: 5px solid red;
+      overflow:auto;
+    }
+
+    /*modal effect*/
+
+    .modal.fade .modal-dialog {
+  -webkit-transform: scale(0.1);
+  -moz-transform: scale(0.1);
+  -ms-transform: scale(0.1);
+  transform: scale(0.1);
+  top: 300px;
+  opacity: 0;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  transition: all 1s;
+}
+
+.modal.fade.in .modal-dialog {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -webkit-transform: translate3d(0, -300px, 0);
+  transform: translate3d(0, -300px, 0);
+  opacity: 1;
+}
+
+    /*img hover*/
+
+  .hovereffect {
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  cursor: default;
+}
+
+.hovereffect .overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+.hovereffect img {
+  display: block;
+  position: relative;
+  -webkit-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
+}
+
+.hovereffect:hover img {
+  filter: grayscale(1) blur(4px);
+  -webkit-filter: grayscale(1) blur(4px);
+  -webkit-transform: scale(1.4);
+  -ms-transform: scale(1..4);
+  transform: scale(1.4);
+}
+
+.hovereffect h2 {
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  font-size: 17px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.hovereffect a.info {
+  display: inline-block;
+  text-decoration: none;
+  padding: 7px 14px;
+  border: 1px solid #fff;
+  margin: 50px 0 0 0;
+  background-color: red;
+}
+
+.hovereffect a.info:hover {
+  box-shadow: 0 0 5px #fff;
+}
+
+.hovereffect a.info, .hovereffect h2 {
+  -webkit-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  transform: scale(0.7);
+  -webkit-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.hovereffect:hover a.info, .hovereffect:hover h2 {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+  </style>
+</head>
+<body style="color:black">
+
+<div id="mail" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Mail</h4>
+      </div>
+      <div class="modal-body" style="background:#1f375a;color:white">
+        <form class="form" method="POST" action="/send" content-type:"application/json">
+        <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            <label>From:</label>
+          </div>  
+        <div class="col-md-9">
+              <input type="email" name="from" class="form-control" type="text">
+            </div>
+        </div>
+        </div>    
+            <br/>
+            <div class="row">
+            <div class="col-md-12">
+          <div class="col-md-3">
+            <label>Subject:</label>
+          </div>  
+        <div class="col-md-9">
+              <input name="subject" class="form-control" type="text">
+            </div>
+        </div> 
+      </div>
+            <br/>
+           <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-3">
+              <label>Message:</label>
+              </div>
+              <div class="col-md-9">
+              <textarea name="body" class="form-control" rows="5" style="resize:none"></textarea>
+            </div>
+            </div>
+            </div>
+            <br/>
+           <div class="col-md-12"> 
+            <div class="col-md-6">
+          <input name="attachment" type="file">
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-success" type="submit" align="right">Send</button>
+        </div>
+      </form>
+          </div> <br/>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+
+  </div>
+</div> 
+
+<div id="chat" class="modal fade" role="dialog" style="color:black">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Chat</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="enter-name">
+          <input type="text" id="username" class="form-control" placeholder="Enter Your Name">
+          <button class="btn btn-primary" id="start-chat">Start</button>
+        </div>  
+
+        <div class="main-chat">
+          <div id="chatlog">
+
+          </div>  
+          <br/>
+
+          <div class="col-md-12">
+          <div class="form-group col-md-10" style="padding: 0 30px;">
+              <input class="form-control" id="message_input" type="textarea" placeholder="type your message here">
+          </div>   
+          <div class="col-md-2"> 
+          <button class="btn btn-success" id="sendchat">Send</button>
+        </div>
+          </div>      
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+
+  </div>
+</div>  
+
+<div id="resume" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Resume</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+
+  </div>
+</div>       
+
+<div id="blog" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Blog</h4>
+      </div>
+      <div class="modal-body" style="background:#ed994e">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        <div align="center"><h4>COMMENT SECTION</h4></div><br/>
+        
+        <div class="col-md-12">
+          <div class="col-md-9">
+            <textarea rows="3" class="form-control" placeholder="Post Your Comment here....." style="resize:none"></textarea>
+          </div>  
+          <div class="col-md-3">
+            <button class="btn btn-success">Post It</button>
+          </div>  
+        </div> 
+        <br/> 
+
+        <div class="col-md-12 comment-log">
+
+        </div>  
+
+      </div>
+    </div>
+
+  </div>
+</div>    
+
+
+<div class="container-fluid">
+  <div class="intro">
+  <img src="7.jpg">
+  <p>Hi! I'm xyz. hello!</p>
+  </div>
+
+
+
+
+
+  <div class="row">
+    <br/><br/><br/><br/><br/><br/><br/><br/>
+    <div class="col-md-12 slider" id="slider" style="width:96%;">
+    <div class="col-md-1 box">
+      <img src="e-mail.jpg" data-target="#mail" data-toggle="modal" width="287px" height="200px"></img>
+    </div>
+    
+    <div class="col-md-1 box hovereffect">
+      <img src="./chat.jpg" width="287px" height="200px"></img>
+      <div class="overlay">
+           <h2>Hover effect 3</h2>
+           <a class="info" data-target="#chat" data-toggle="modal" href="#">Start Chat</a>
+      </div>  
+    </div>
+
+    <div class="col-md-1 box">
+      <img src="resume.jpg" data-target="#resume" data-toggle="modal" width="287px" height="200px"></img>
+    </div>
+
+    <div class="col-md-1 box">
+      <img src="blog.png" data-target="#blog" data-toggle="modal" width="287px" height="200px"></img>
+    </div> 
+
+      <div class="col-md-1 box">
+      <img src="blog.png" data-target="#blog" data-toggle="modal" width="287px" height="200px"></img>
+    </div> 
+
+  </div>
+  </div>  
+
+</div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.js"></script>
+        
+        <script type="text/javascript">
+        
+            // our socket.io code goes here
+
+            var socketio = io.connect("localhost:8080");
+
+            socketio.on("message_to_client", function(data) {
+                console.log("1");
+  document.getElementById("chatlog").innerHTML += ("<p>" + data['message']['username']+" : "+data['message']['message'] + "<p>");
+                console.log("2");
+            });
+
+
+            $("#sendchat").click(function(){
+              var msg = document.getElementById("message_input").value;
+              var user = document.getElementById("username").value;
+              var data = { message : msg, username : user};
+              socketio.emit("message_to_server", { message : data});
+              $("#message_input").val("");
+
+              //$('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
+
+              $("#chatlog").animate({ scrollTop: $('#chatlog')[0].scrollHeight}, 100);
+            });
+
+            $('#message_input').keydown(function(e) {
+              if(e.keyCode === 13) {
+                // do whatever you want with the value
+                var msg = document.getElementById("message_input").value;
+                var user = document.getElementById("username").value;
+                var data = { message : msg, username : user};
+                socketio.emit("message_to_server", { message : data});
+
+                $(this).val("");
+
+               // $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
+               $("#chatlog").animate({ scrollTop: $('#chatlog')[0].scrollHeight}, 100);
+              }
+          });
+            // function sendMessage() {
+            //     var msg = document.getElementById("message_input").value;
+            //     socketio.emit("message_to_server", { message : msg});
+            // }
+
+
+
+        </script>
+
+<script>
+  $('#slider').slick({
+          infinite: true,
+          slidesToShow: 4,
+          slidesToScroll: 1
+        });
+
+
+  $('#chat').on('shown.bs.modal', function (e) {
+    $(".enter-name").show();
+    $(".main-chat").hide();
+
+  })
+
+  $("#start-chat").click(function(){
+    $(".main-chat").show();
+    $(".enter-name").hide();
+    $("#message_input").emojiPicker();
+  });
+
+  $('#chat').on('hidden.bs.modal', function (e) {
+
+    document.getElementById("chatlog").innerHTML = "";
+    $("#username").val("");
+})
+
+  // var chatlog = document.getElementById("chatlog");
+
+  // var isScrolledToBottom = chatlog.scrollHeight - chatlog.clientHeight <= chatlog.scrollTop + 1;
+
+  // if(isScrolledToBottom)
+  //   chatlog.scrollTop = chatlog.scrollHeight - chatlog.clientHeight;
+
+  // $("#chatlog").animate({ scrollTop: $('#chatlog')[0].scrollHeight}, 1000);
+
+</script>
+
+</html>
